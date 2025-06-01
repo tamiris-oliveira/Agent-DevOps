@@ -309,8 +309,9 @@ def NormalizeMonetaryValuesTool(args: dict) -> str:
             )
             df[col] = pd.to_numeric(df[col], errors='coerce')
             df[col] = df[col].apply(
-                lambda x: f"{x:,.2f}".replace('.', ',') if pd.notnull(x) else ''
+                lambda x: f"{x:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.') if pd.notnull(x) else ''
             )
+
 
         df.to_excel(file_path, index=False)
         return f"Success. Columns normalized: {columns}"
